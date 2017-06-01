@@ -19,9 +19,9 @@
   	
   		<form action="/UploadServlet" method="POST" enctype="multipart/form-data">
   		病情描述:<input type="text"  name="desc"  height="50"/>
-  		患处图片:<input type="file" name="img" />
+  		患处图片:<input type="file" name="imgurl" />
   		<input type="submit" value="提交"/>
-  	</form>
+  		</form>
   
   </c:if>
   </body>

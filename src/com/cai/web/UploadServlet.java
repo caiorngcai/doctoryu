@@ -25,20 +25,25 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 
 import com.cai.domian.PatientDesc;
+import com.cai.domian.User;
 import com.cai.factory.BasicFactory;
 import com.cai.service.PatientDescService;
+import com.cai.service.PatientDescServiceImpl;
 import com.cai.util.IOUtils;
 import com.cai.util.PicUtils;
 import com.sun.corba.se.impl.interceptors.PICurrent;
 
 public class UploadServlet extends HttpServlet {
+	
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		
+		String value=null;
+		String imgurl=null;
+		User user=new User();
 		//ProdService service = BasicFactory.getFactory().GetInstance(ProdService.class);
-		//PatientDescService service=BasicFactory.getFactory().GetInstance(PatientDescService.class);
+		PatientDescService service=BasicFactory.getFactory().GetInstance(PatientDescService.class);
 		try{
 			//由于前端不能直接访问web-inf目录下的文件，故要用map保存数据
 			Map<String,String> parammap=new HashMap<String, String>();
@@ -57,21 +62,20 @@ public class UploadServlet extends HttpServlet {
 			if(!fileupload.isMultipartContent(request)){
 				throw new RuntimeException("用正确的表单的上传！");
 			}
-			List<FileItem> list=fileupload.parseRequest(request);//这一行有异常
+			List<FileItem> list=fileupload.parseRequest(request);
 			for(FileItem item: list){
-				//普通字段
+				//普通字段，病情描述的内容
 				if(item.isFormField()){
 					String name=item.getFieldName();
-					//这里有问题
-					String value=item.getString(encode);
+							value=item.getString(encode);
 					parammap.put(name, value);
 				}else{
 					//图片
-					String realname=item.getName();
+					String realname=item.getName();//图片的真实名称
 					String uuidname=UUID.randomUUID().toString()+"_"+realname;
 					String hash=Integer.toHexString(uuidname.hashCode());
-					String upload=this.getServletContext().getRealPath("WEB-INF/upload");
-					String imgurl="/WEB-INF/upload";
+					String upload=this.getServletContext().getRealPath("WEB-INF/upload");//upload的绝对路径
+					imgurl="/WEB-INF/upload";
 					for(char c:hash.toCharArray()){
 						//原本路径加上hashcode组成的路径
 						upload+="/"+c;
@@ -99,14 +103,13 @@ public class UploadServlet extends HttpServlet {
 			//如果没有map，此处写法为
 			//BeanUtils.populate(prod, request.getParameterMap());
 			//但是事实上数据在web-inf下，无法访问到
-			BeanUtils.populate(patientdesc, parammap);
-			//service.addProd(prod);
-			
-		
-			
-		//	这里明天写，dao层
-			
-			
+				//这个函数执行不成功，所以直接给bean赋值好了
+			//BeanUtils.populate(patientdesc, parammap);
+			patientdesc.setDesc(value);
+			patientdesc.setImgurl(imgurl);
+			patientdesc.setPatientname(user.getUsername());
+			//这句调用的sql有问题
+			//service.addDesc(patientdesc);
 			//提示成功，返回主页
 			response.getWriter().write("添加病情成功，3秒后返回主页。。");
 			response.setHeader("Refresh","3;url=/index.jsp");

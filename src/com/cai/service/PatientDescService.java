@@ -1,5 +1,9 @@
 package com.cai.service;
 
-public class PatientDescService {
+import java.sql.Connection;
 
+import com.cai.domian.PatientDesc;
+
+public interface PatientDescService {
+	void addDesc(PatientDesc desc);
 }

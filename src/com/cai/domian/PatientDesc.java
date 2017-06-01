@@ -1,13 +1,14 @@
 package com.cai.domian;
 
 public class PatientDesc {
-	private String img;
+	private String imgurl;
 	private String desc;
-	public String getImg() {
-		return img;
+	private String patientname;
+	public String getImgurl() {
+		return imgurl;
 	}
-	public void setImg(String img) {
-		this.img = img;
+	public void setImgurl(String imgurl) {
+		this.imgurl = imgurl;
 	}
 	public String getDesc() {
 		return desc;
@@ -15,5 +16,11 @@ public class PatientDesc {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-
+	public String getPatientname() {
+		return patientname;
+	}
+	public void setPatientname(String patientname) {
+		this.patientname = patientname;
+	}
+	
 }
