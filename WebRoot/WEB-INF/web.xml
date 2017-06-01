@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" 
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	<context-param>
+		<description>全站编码设置</description>
+		<param-name>encode</param-name>
+		<param-value>utf-8</param-value>
+	</context-param>
+	<error-page>
+		<exception-type>java.lang.Throwable</exception-type>
+		<location>/ error/500.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error/404.jsp</location>
+	</error-page>
+	<filter>
+		<description>全站乱码过滤器</description>
+		<filter-name>EncodeFilter</filter-name>
+		<filter-class>com.cai.filter.EncodeFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>EncodeFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter>
+		<description>自动登录过滤器</description>
+		<filter-name>AutologinFilter</filter-name>
+		<filter-class>com.cai.filter.AutologinFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<url-pattern>/*</url-pattern>
+		<filter-name>AutologinFilter</filter-name>
+	</filter-mapping>
+	<!-- Servlet配置开始 -->	
+	  <servlet>
+	    <servlet-name>ValiImg</servlet-name>
+	    <servlet-class>com.cai.web.ValiImg</servlet-class>
+	  </servlet>
+  <servlet>
+    <servlet-name>LoginServlet</servlet-name>
+    <servlet-class>com.cai.web.LoginServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ActiveServlet</servlet-name>
+    <servlet-class>com.cai.web.ActiveServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>RegistServlet</servlet-name>
+    <servlet-class>com.cai.web.RegistServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>com.cai.web.LogoutServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>ImgServlet</servlet-name>
+    <servlet-class>com.cai.web.ImgServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>UploadServlet</servlet-name>
+    <servlet-class>com.cai.web.UploadServlet</servlet-class>
+  </servlet>
+
+	
+	  <servlet-mapping>
+	    <servlet-name>ValiImg</servlet-name>
+	    <url-pattern>/ValiImg</url-pattern>
+	  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>LoginServlet</servlet-name>
+    <url-pattern>/LoginServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ActiveServlet</servlet-name>
+    <url-pattern>/ActiveServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>RegistServlet</servlet-name>
+    <url-pattern>/RegistServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>LogoutServlet</servlet-name>
+    <url-pattern>/LogoutServlet</url-pattern>
+  </servlet-mapping>
+ 
+  <servlet-mapping>
+    <servlet-name>ImgServlet</servlet-name>
+    <url-pattern>/ImgServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UploadServlet</servlet-name>
+    <url-pattern>/UploadServlet</url-pattern>
+  </servlet-mapping>
+ 
+	<!-- Servlet配置结束 -->
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>
